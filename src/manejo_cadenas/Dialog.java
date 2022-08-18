@@ -5,6 +5,7 @@
 package manejo_cadenas;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,20 +22,37 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Sapón Pérez
  */
 public class Dialog extends javax.swing.JDialog {
-
-     public String dir="";   
-     public String texto="";
-  
+   frm_cadenas_traductor inicio = new frm_cadenas_traductor();
+    
     /**
      * Creates new form Dialog
      */
    
+   String palabra;
     public Dialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
        
         
     }
+
+    public Dialog(String palabra) {
+        this.palabra = palabra;
+    }
+
+    public Dialog(String palabra, Frame owner, boolean modal) {
+        super(owner, modal);
+        this.palabra = palabra;
+    }
+    
+    public void setPalabra (String s){
+        this.palabra=s;
+    }
+    
+    public String getPalabra(){
+        return this.palabra;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,10 +66,10 @@ public class Dialog extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btn_archivo = new javax.swing.JButton();
-        txt_dir = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txt_resultado = new javax.swing.JTextArea();
-        btn_guardar = new javax.swing.JButton();
+        txt_ingresar = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txt_posiciones = new javax.swing.JTextField();
+        lbl_resultado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -60,29 +78,28 @@ public class Dialog extends javax.swing.JDialog {
             }
         });
 
-        btn_archivo.setText("Elegir Archivo...");
+        btn_archivo.setText("Buscar palabra");
         btn_archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_archivoActionPerformed(evt);
             }
         });
 
-        txt_dir.addActionListener(new java.awt.event.ActionListener() {
+        txt_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_dirActionPerformed(evt);
+                txt_ingresarActionPerformed(evt);
             }
         });
 
-        txt_resultado.setColumns(20);
-        txt_resultado.setRows(5);
-        jScrollPane1.setViewportView(txt_resultado);
+        jLabel1.setText("Ingresa la palabra que buscas:");
 
-        btn_guardar.setText("Guardar");
-        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+        txt_posiciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guardarActionPerformed(evt);
+                txt_posicionesActionPerformed(evt);
             }
         });
+
+        lbl_resultado.setText(">>>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -92,28 +109,33 @@ public class Dialog extends javax.swing.JDialog {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(txt_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(btn_archivo)
                         .addGap(21, 21, 21))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_guardar)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbl_resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_posiciones, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_archivo)
-                    .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_guardar)
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(txt_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_posiciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_resultado))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -124,9 +146,7 @@ public class Dialog extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,7 +157,7 @@ public class Dialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -149,97 +169,25 @@ public class Dialog extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosed
 
     private void btn_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_archivoActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fc=new JFileChooser();
- 
-        //Indicamos que podemos seleccionar varios ficheros
-        fc.setMultiSelectionEnabled(true);
-
-        //Indicamos lo que podemos seleccionar
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-        //Creamos el filtro
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
-
-        //Le indicamos el filtro
-        fc.setFileFilter(filtro);
-        
-        
-        //Abrimos la ventana, guardamos la opcion seleccionada por el usuario
-        int seleccion=fc.showOpenDialog(jPanel2);
- 
-//Si el usuario, pincha en aceptar
-        if(seleccion==JFileChooser.APPROVE_OPTION){
- 
-    //Seleccionamos el fichero
-            File fichero=fc.getSelectedFile();
- 
-    //Ecribe la ruta del fichero seleccionado en el campo de texto
-            txt_dir.setText(fichero.getAbsolutePath());
- 
-            try(FileReader fr=new FileReader(fichero)){
-                String cadena="";
-                int valor=fr.read();
-                while(valor!=-1){
-                    cadena=cadena+(char)valor;
-                    valor=fr.read();
-                    
-                }
-                texto = cadena;
-                txt_resultado.setText(cadena);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-        
       
+       
         
-     
         
+        
+        
+        
+
     }//GEN-LAST:event_btn_archivoActionPerformed
 
-    private void txt_dirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_dirActionPerformed
+    private void txt_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_ingresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_dirActionPerformed
+    }//GEN-LAST:event_txt_ingresarActionPerformed
 
-    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+    private void txt_posicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_posicionesActionPerformed
         // TODO add your handling code here:
-        
-        JFileChooser fc=new JFileChooser();
- 
-        //Indicamos que podemos seleccionar varios ficheros
-        fc.setMultiSelectionEnabled(true);
-
-        //Indicamos lo que podemos seleccionar
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-        //Creamos el filtro
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
-
-        //Le indicamos el filtro
-        fc.setFileFilter(filtro);
-        
-        
-        //Abrimos la ventana, guardamos la opcion seleccionada por el usuario
-        int seleccion=fc.showSaveDialog(this);
- 
-//Si el usuario, pincha en aceptar
-        if(seleccion==JFileChooser.APPROVE_OPTION){
- 
-    //Seleccionamos el fichero
-            File fichero=fc.getSelectedFile();
- 
-
-            
- 
-            try(FileWriter fr=new FileWriter(fichero)){
-                fr.write(this.txt_resultado.getText());
-                
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_btn_guardarActionPerformed
+    }//GEN-LAST:event_txt_posicionesActionPerformed
+    
+    
     
    
     /**
@@ -315,11 +263,11 @@ public class Dialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_archivo;
-    private javax.swing.JButton btn_guardar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txt_dir;
-    private javax.swing.JTextArea txt_resultado;
+    private javax.swing.JLabel lbl_resultado;
+    private javax.swing.JTextField txt_ingresar;
+    private javax.swing.JTextField txt_posiciones;
     // End of variables declaration//GEN-END:variables
 }
